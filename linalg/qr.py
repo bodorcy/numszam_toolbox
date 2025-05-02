@@ -8,10 +8,11 @@ from numpy.linalg import norm
 
 def get_projection(u: ndarray, v: ndarray):
     """
+    Gram-Schmidt eljárás-ban szereplő vektor projekció elvégzése.
     :param u: a vektor amiRE projektálunk
     :param v: a vekotr AMIT projektélunk
     :return:
-        A v vekotr u vektorra vett projekcióját adja vissza.
+        A v vektor u vektorra vett projekciója.
     """
     uv_skalarszorzat = np.dot(u, v)
     uu_skalarszorzat = np.dot(u, u)
@@ -21,10 +22,10 @@ def get_projection(u: ndarray, v: ndarray):
 
 def qr(A, verbose=False):
     """
+    QR felbontás elvégzése, egy n x m -es mátrixon.
     :param A: n x m -es mátrix
     :param verbose: lépések kiiratása
-    :return: Az A mátrix QR felbontása, (Q, R) alakban,
-    ahol Q ortoginális, R felső trianguláris.
+    :return: Az A mátrix QR felbontása, (Q, R) alakban, ahol Q ortoginális, R felső trianguláris.
     """
     if verbose:
         print("------- QR felbontás -------")
