@@ -7,16 +7,17 @@ from numpy import ndarray
 
 
 class EliminaciosMatrix:
-    '''
-    A Gauss-elimináció során, egy oszlopból kinullázásából adódó eliminációs mátrix.
-    '''
+    """
+    A Gauss-elimináció során,
+    egy oszlopból kinullázásából adódó eliminációs mátrix.
+    """
     def __init__(self, matrix: ndarray=None, size=-1):
-        '''
+        """
         :param matrix:
             Inicializálás mátrix-szal.
         :param size:
             Inicializálás size x size méretű egységmátrix-szal.
-        '''
+        """
         if matrix is not None and size != -1:
             raise ValueError("Nem adható meg egyszerre mátrix és méret.")
         if matrix is not None:
@@ -25,13 +26,13 @@ class EliminaciosMatrix:
             self.matrix = np.eye(size, dtype=float)
 
     def __mul__(self, other):
-        '''
+        """
         Eliminációs mátrixok szorzása ( == kompozíciója)
         :param other:
             Eliminációs mátrix, amivel jobbról szorzunk.
         :return:
             A két eliminációs mátrix kompozíciója.
-        '''
+        """
 
         prod = self.matrix
 
@@ -54,12 +55,13 @@ class EliminaciosMatrix:
         return str(self.matrix)
 
     def invert_elim(self):
-        '''
+        """
         Eliminációs mátrix invertálás
-        (főátló alatti elemek ellentettjeit vesszük). Az eredeti mátrixot invertálja!
+        (főátló alatti elemek ellentettjeit vesszük).
+        Az eredeti mátrixot invertálja!
         :return:
         Az invertált elminációs mátrix.
-        '''
+        """
         self.matrix = (self.matrix @ (-1 * np.eye(self.matrix.shape[1]))
                        + (2 * np.eye(self.matrix.shape[1])))
 
@@ -70,7 +72,7 @@ class EliminaciosMatrix:
 
 
 def lu(A: ndarray, verbose=False):
-    '''
+    """
     Négyzetes mátrix LU felbontása.
 
     Parameters
@@ -90,16 +92,19 @@ def lu(A: ndarray, verbose=False):
     ------
     ValueError
         Ha A nem négyzetes, vagy a pivotálás nem végezhető el.
-    '''
+    """
 
     if not isinstance(A, ndarray):
         raise ValueError("Az A mátrix nem megfelelő típusú.")
     if A.shape[0] != A.shape[1]:
         raise ValueError("A mátrix nem négyzetes!")
     if np.any(A.diagonal() == 0):
-        raise ValueError("0 pivot elem")   #TODO: partial pivoting
+        raise ValueError("0 pivot elem")
 
-    n = A.shape[0]                         # már biztos, hogy négyzetes
+    if verbose:
+        print("------- LU felbontás -------")
+
+    n = A.shape[0]  # már biztos, hogy négyzetes
     elim_matrixok = []
     U = A.copy()
 
@@ -109,8 +114,8 @@ def lu(A: ndarray, verbose=False):
         for i in range(j+1, U.shape[1]):
             M[i, j] = - U[i, j] / pivot
 
-        elim_matrixok.insert(0, M)         # mátrixszorzásnak megfelelő sorrendben
-        U = M.matrix @ U                   # @ == mátrix szorzás
+        elim_matrixok.insert(0, M)  # mátrixszorzásnak megfelelő sorrendben
+        U = M.matrix @ U  # @ == mátrix szorzás
 
     Ls = [m.invert_elim() for m in elim_matrixok]
     L = EliminaciosMatrix(size=n)
@@ -122,15 +127,16 @@ def lu(A: ndarray, verbose=False):
         print("Eliminációs mátrixok: (Mn * Mn-1 * Mn-2 * ... * M1 * A)")
         n = len(elim_matrixok)
         for m in elim_matrixok:
-            print(f"M{n}\n{m.matrix}\n")
+            print(f"M{n}\n{m.matrix}")
             n -= 1
         print(f"L:\n{L}\nU:\n{U}")
+        print("----------------------")
 
     return L, U
 
 
 def main():
-    '''asd'''
+    """asd"""
     np.set_printoptions(
         precision=4,
         suppress=True,  #
@@ -139,7 +145,8 @@ def main():
 
     A = np.array([[1, 1, 1, 1], [2, 1, 1, 3], [3, 1, 3, 2], [1, 1, 1, 1]], dtype=float)
 
-    lu(A, verbose=False)
+    lu(A, verbose=True)
+
 
 if __name__ == "__main__":
     main()
