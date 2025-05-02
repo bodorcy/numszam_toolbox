@@ -17,7 +17,7 @@ def get_projection(u: ndarray, v: ndarray):
     uv_skalarszorzat = np.dot(u, v)
     uu_skalarszorzat = np.dot(u, u)
 
-    return (uv_skalarszorzat / uu_skalarszorzat) * u
+    return (uv_skalarszorzat / uu_skalarszorzat                                                                               ) * u
 
 
 def qr(A, verbose=False):
