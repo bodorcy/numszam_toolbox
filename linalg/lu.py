@@ -1,12 +1,16 @@
+"""
+LU felbontás.
+"""
+
 import numpy as np
 from numpy import ndarray
 
 
-class EliminaciosMatrix():
+class EliminaciosMatrix:
     '''
     A Gauss-elimináció során, egy oszlopból kinullázásából adódó eliminációs mátrix.
     '''
-    def __init__(self, matrix: ndarray = None, size = -1):
+    def __init__(self, matrix: ndarray=None, size=-1):
         '''
         :param matrix:
             Inicializálás mátrix-szal.
@@ -15,11 +19,10 @@ class EliminaciosMatrix():
         '''
         if matrix is not None and size != -1:
             raise ValueError("Nem adható meg egyszerre mátrix és méret.")
-        elif matrix is not None:
+        if matrix is not None:
             self.matrix = matrix
         elif size != -1:
-            self.matrix =np.eye(size, dtype = int)
-
+            self.matrix = np.eye(size, dtype=float)
 
     def __mul__(self, other):
         '''
@@ -65,7 +68,8 @@ class EliminaciosMatrix():
 
         return self
 
-def lu(A: ndarray):
+
+def lu(A: ndarray, verbose=False):
     '''
     Négyzetes mátrix LU felbontása.
 
@@ -91,8 +95,8 @@ def lu(A: ndarray):
         raise ValueError("Az A mátrix nem megfelelő típusú.")
     if A.shape[0] != A.shape[1]:
         raise ValueError("A mátrix nem négyzetes!")
-    if any(A.diagonal()) == np.int64(0):
-        raise ValueError("0 pivot elem")
+    if np.any(A.diagonal() == 0):
+        raise ValueError("0 pivot elem")  #TODO: partial pivoting
 
     elim_matrixok = []
     U = A.copy()
@@ -103,24 +107,37 @@ def lu(A: ndarray):
         for i in range(j+1, U.shape[1]):
             M[i, j] = - U[i, j] / pivot
 
-        elim_matrixok.append(M)
+        elim_matrixok.insert(0, M)  # mátrixszorzásnak megfelelő sorrendben
         U = M.matrix @ U
 
-    Ls = [m.invert_elim() for m in elim_matrixok[::-1]]
+    Ls = [m.invert_elim() for m in elim_matrixok]
     L = EliminaciosMatrix(size=A.shape[1])
 
     for l in Ls:
         L = L * l
 
+    if verbose:
+        print("Eliminációs mátrixok: (Mn * Mn-1 * Mn-2 * ... * M1 * A)")
+        n = len(elim_matrixok)
+        for m in elim_matrixok:
+            print(f"M{n}\n{m.matrix}\n")
+            n -= 1
+        print(f"L:\n{L}\nU:\n{U}")
+
     return L, U
 
+
 def main():
-    A = np.array([[0, 1, 1, 1], [2, 1, 1, 3], [3, 1, 3, 2], [1, 1, 1, 1]], dtype=int)
+    '''asd'''
+    np.set_printoptions(
+        precision=4,  # 3 decimal places
+        suppress=True,  # Don't use scientific notation # Wider lines  # Print large arrays fully
+        formatter={'float_kind': '{:.2f}'.format}  # Custom float format
+    )
 
-    L, U = lu(A)
+    A = np.array([[1, 1, 1, 1], [2, 1, 1, 3], [3, 1, 3, 2], [1, 1, 1, 1]], dtype=float)
 
-    print(f"L:\n{L}\nU:\n{U}")
+    lu(A, verbose=False)
 
 if __name__ == "__main__":
     main()
-
