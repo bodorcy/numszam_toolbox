@@ -1,0 +1,67 @@
+"""
+QR felbontás Gram-Schmidt eljárással.
+"""
+
+import numpy as np
+from numpy import ndarray
+from numpy.linalg import norm
+
+def get_projection(u :ndarray, v :ndarray):
+    # TODO: Householder / Givens -re átalakítani
+    """
+    :param u: a vektor amiRE projektálunk
+    :param v: a vekotr AMIT projektélunk
+    :return:
+        A v vekotr u vektorra vett projekcióját adja vissza.
+    """
+    uv_skalarszorzat = np.dot(u, v)
+    uu_skalárszorzat = np.dot(u, u)
+
+    return (uv_skalarszorzat / uu_skalárszorzat) * u
+
+
+def qr(A, verbose=False):
+    """
+    :param A: n x m -es mátrix
+    :param verbose: lépések kiiratása
+    :return: Az A mátrix QR felbontása, (Q, R) alakban, ahol Q ortoginális, R felső trianguláris.
+    """
+    if verbose:
+        print("------- QR felbontás -------")
+    n, m = A.shape[0], A.shape[1]
+    Q = np.zeros((n, m))                      # Q n x m -es mátrix
+    R = np.zeros((n, n))
+
+    for j in range(m):
+        v_oszlop = A[:, j]
+
+        for i in range(j):
+            R[i, j] = np.dot(Q[:, i], v_oszlop)  # lehetne a végén R = Q' * A -val is
+            v_oszlop = v_oszlop - get_projection(Q[:, i], v_oszlop)
+
+        v_oszlop = v_oszlop / norm(v_oszlop)    # vektorokra kettes norma by default
+                                                # itt nagy numerikus hiba keletkezik, ha pl norm(v) == sqrt(2)
+        if verbose:
+            print(f"Az A {j + 1}. oszlopának ortonormált vekotra: {v_oszlop}^T")
+
+        Q[:, j] = v_oszlop
+
+    if verbose:
+        print(f"Q:\n{Q}\nR:\n{R}")
+        print("----------------------")
+
+    return Q, R
+
+def main():
+    np.set_printoptions(
+        precision=4,
+        suppress=True,  #
+        formatter={'float_kind': '{:.2f}'.format}
+    )
+
+    A = np.array([[1, 0], [2, 1], [3, 7], [1, 2]])
+
+    Q, R = qr(A, verbose=True)
+
+if __name__ == '__main__':
+    main()

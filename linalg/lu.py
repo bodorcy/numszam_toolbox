@@ -91,27 +91,29 @@ def lu(A: ndarray, verbose=False):
     ValueError
         Ha A nem négyzetes, vagy a pivotálás nem végezhető el.
     '''
+
     if not isinstance(A, ndarray):
         raise ValueError("Az A mátrix nem megfelelő típusú.")
     if A.shape[0] != A.shape[1]:
         raise ValueError("A mátrix nem négyzetes!")
     if np.any(A.diagonal() == 0):
-        raise ValueError("0 pivot elem")  #TODO: partial pivoting
+        raise ValueError("0 pivot elem")   #TODO: partial pivoting
 
+    n = A.shape[0]                         # már biztos, hogy négyzetes
     elim_matrixok = []
     U = A.copy()
 
-    for j in range(A.shape[0]):
-        M = EliminaciosMatrix(matrix=None, size=A.shape[1])
+    for j in range(n):
+        M = EliminaciosMatrix(matrix=None, size=n)
         pivot = U[j, j]
         for i in range(j+1, U.shape[1]):
             M[i, j] = - U[i, j] / pivot
 
-        elim_matrixok.insert(0, M)  # mátrixszorzásnak megfelelő sorrendben
-        U = M.matrix @ U
+        elim_matrixok.insert(0, M)         # mátrixszorzásnak megfelelő sorrendben
+        U = M.matrix @ U                   # @ == mátrix szorzás
 
     Ls = [m.invert_elim() for m in elim_matrixok]
-    L = EliminaciosMatrix(size=A.shape[1])
+    L = EliminaciosMatrix(size=n)
 
     for l in Ls:
         L = L * l
@@ -130,9 +132,9 @@ def lu(A: ndarray, verbose=False):
 def main():
     '''asd'''
     np.set_printoptions(
-        precision=4,  # 3 decimal places
-        suppress=True,  # Don't use scientific notation # Wider lines  # Print large arrays fully
-        formatter={'float_kind': '{:.2f}'.format}  # Custom float format
+        precision=4,
+        suppress=True,  #
+        formatter={'float_kind': '{:.2f}'.format}
     )
 
     A = np.array([[1, 1, 1, 1], [2, 1, 1, 3], [3, 1, 3, 2], [1, 1, 1, 1]], dtype=float)
