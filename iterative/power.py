@@ -1,6 +1,11 @@
+"""
+Hatványmódszer megvalísitás, kirajzolással.
+"""
+
 import numpy as np
 import matplotlib.pyplot as plt
-from utils.plot_vector import VectorPlotter
+#from utils.plot_vector import VectorPlotter
+from utils.Plotter import VectorPlotter
 
 
 def power_method(A, v0=None, max_iterations=50, tol=1e-5, verbose=False, draw=False):
@@ -39,7 +44,9 @@ def power_method(A, v0=None, max_iterations=50, tol=1e-5, verbose=False, draw=Fa
             break
 
         if verbose:
-            print(f"b_{iteration} = {b_k1} | b_{iteration}_norm = {b_k1_norm} | b_{iteration}_unit = {b_k1_unit} | sajátérték becslés: {b_k1_norm / np.linalg.norm(b_k)}")
+            print(f"b_{iteration} = {b_k1} | b_{iteration}_norm = {b_k1_norm} |"
+                  f"b_{iteration}_unit = {b_k1_unit} |"
+                  f"sajátérték becslés: {b_k1_norm / np.linalg.norm(b_k)}")
 
         b_k = b_k1_unit
 
@@ -58,6 +65,7 @@ def power_method(A, v0=None, max_iterations=50, tol=1e-5, verbose=False, draw=Fa
 
 
 def main():
+    """ asd """
     A = np.array([[2, 1],
                   [1, 3]], dtype=float)
 
