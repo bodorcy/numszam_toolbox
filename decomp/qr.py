@@ -17,7 +17,7 @@ def get_projection(u: ndarray, v: ndarray):
     uv_skalarszorzat = np.dot(u, v)
     uu_skalarszorzat = np.dot(u, u)
 
-    return (uv_skalarszorzat / uu_skalarszorzat                                                                               ) * u
+    return (uv_skalarszorzat / uu_skalarszorzat) * u
 
 
 def qr(A, verbose=False):
@@ -29,9 +29,14 @@ def qr(A, verbose=False):
     """
     if verbose:
         print("------- QR felbontás -------")
+
     n, m = A.shape[0], A.shape[1]
     Q = np.zeros((n, m))  # Q n x m -es mátrix
-    R = np.zeros((n, n))
+    R = np.zeros((m, m))
+
+    if n != m or abs(np.linalg.det(A)) < 1e-5:
+        print("Vigyázat, a mátrix (közel) szinguláris!")
+
 
     for j in range(m):
         v_oszlop = A[:, j]
@@ -42,7 +47,8 @@ def qr(A, verbose=False):
 
         # vektorokra kettes norma by default,
         # itt nagy numerikus hiba keletkezik, ha pl norm(v) == sqrt(2)
-        v_oszlop = v_oszlop / norm(v_oszlop)
+        R[j, j] = norm(v_oszlop)
+        v_oszlop = v_oszlop / R[j, j]
 
         if verbose:
             print(f"Az A {j + 1}. oszlopának ortonormált vekotra:"
@@ -67,9 +73,11 @@ def main():
         formatter={'float_kind': '{:.2f}'.format}
     )
 
-    A = np.array([[1, 0], [2, 1], [3, 7], [1, 2]])
+    A = np.array([[0, 3], [2, 0]])
 
-    qr(A, verbose=True)
+    Q, R = qr(A, verbose=True)
+
+    print(Q @ R)
 
 
 if __name__ == '__main__':

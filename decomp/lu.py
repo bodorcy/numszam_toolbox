@@ -21,49 +21,49 @@ class EliminaciosMatrix:
         if matrix is not None and size != -1:
             raise ValueError("Nem adható meg egyszerre mátrix és méret.")
         if matrix is not None:
-            self.matrix = matrix
+            self._matrix = matrix
         elif size != -1:
-            self.matrix = np.eye(size, dtype=float)
+            self._matrix = np.eye(size, dtype=float)
+
+    @property
+    def matrix(self):
+        return self._matrix
 
     def __mul__(self, other):
         """
         Eliminációs mátrixok szorzása ( == kompozíciója)
-        :param other:
-            Eliminációs mátrix, amivel jobbról szorzunk.
-        :return:
-            A két eliminációs mátrix kompozíciója.
-        """
 
-        prod = self.matrix
+        :param other: Eliminációs mátrix, amivel jobbról szorzunk.
+        :return: A két eliminációs mátrix kompozíciója.
+        """
+        prod = self.matrix.copy()
 
         for i in range(prod.shape[0]):
             for j in range(prod.shape[1]):
-                if i > j:  # csak a főátló alatti elemek
-                    prod[i, j] = self.matrix[i, j] + other[i, j]
-                    # darabonkénti szorzásnál működik
-                    # mivel pontosan az egyik mátrix eleme nem nulla
+                if i > j:
+                    prod[i, j] = self.matrix[i, j] + other.matrix[i, j]
 
         return EliminaciosMatrix(prod)
 
     def __getitem__(self, key):
-        return self.matrix[key]
+        return self._matrix[key]
 
     def __setitem__(self, key, value):
-        self.matrix[key] = value
+        self._matrix[key] = value
 
     def __str__(self):
-        return str(self.matrix)
+        return str(self._matrix)
 
     def invert_elim(self):
         """
         Eliminációs mátrix invertálás
         (főátló alatti elemek ellentettjeit vesszük).
-        Az eredeti mátrixot invertálja!
+        Az eredeti mátrixot is invertálja!
         :return:
         Az invertált elminációs mátrix.
         """
-        self.matrix = (self.matrix @ (-1 * np.eye(self.matrix.shape[1]))
-                       + (2 * np.eye(self.matrix.shape[1])))
+        self._matrix = (self._matrix @ (-1 * np.eye(self._matrix.shape[1]))
+                       + (2 * np.eye(self._matrix.shape[1])))
 
         # A eliminációs mátrixot megszorozzuk -1 * I-al,
         # majd a főátlóhoz 2-t adunk, hogy a végén 1-esek maradjanok ott.
@@ -73,33 +73,28 @@ class EliminaciosMatrix:
 
 def lu(A: ndarray, verbose=False):
     """
-    Négyzetes mátrix LU felbontása.
+    Négyzetes mátrix LU felbontása részleges pivotálással.
 
-    Parameters
-    ----------
-    A : ndarray
-        Négyzetes, nxn-es mátrix.
+    :param A: Négyzetes, nxn-es mátrix.
+    :type A: numpy.ndarray
 
-    Returns
-    -------
-    L : ndarray
-        Alsó, nxn-es trianguláris mátrix, a főtátlóiban egyesekkel.
+    :param verbose: Ha True, akkor kiírja a lépéseket.
+    :type verbose: bool
 
-    U : ndarray
-        Felső, nxn-es trianguláris mátrix.
+    :returns: Egy háromtagú tuple (L, U, P), ahol:
+              - L (ndarray): Alsó, nxn-es háromszög mátrix, a főátlóban 1-ekkel.\n
+              - U (ndarray): Felső háromszögmátrix.\n
+              - P (ndarray): Permutációs mátrix, ami a pivotálásokat írja le.
 
-    Raises
-    ------
-    ValueError
-        Ha A nem négyzetes, vagy a pivotálás nem végezhető el.
+    :rtype: (ndarray, ndarray, ndarray)
+
+    :raises ValueError: Ha A nem négyzetes, vagy a pivotálás nem végezhető el.
     """
 
     if not isinstance(A, ndarray):
         raise ValueError("Az A mátrix nem megfelelő típusú.")
     if A.shape[0] != A.shape[1]:
         raise ValueError("A mátrix nem négyzetes!")
-    if np.any(A.diagonal() == 0):
-        raise ValueError("0 pivot elem")
 
     if verbose:
         print("------- LU felbontás -------")
@@ -107,10 +102,22 @@ def lu(A: ndarray, verbose=False):
     n = A.shape[0]  # már biztos, hogy négyzetes
     elim_matrixok = []
     U = A.copy()
+    P = np.eye(n) # permutációs mátrix
 
-    for j in range(n):
+    for j in range(n):  # j == oszlop
+        pivot_sor = np.argmax(np.abs(U[j:, j])) + j
+
+        if np.abs(U[pivot_sor, j]) < 1e-6:
+            raise ValueError("A felbontás nem végezhető el stabilan, a mátrix (közel) szinguláris!")
+
+        if pivot_sor != j:  # egy másik sorban van megfelelő pivot elem
+            U[[j, pivot_sor], :] = U[[pivot_sor, j], :]  # sorcsere hackkelés
+            P[[j, pivot_sor], :] = P[[pivot_sor, j], :]
+
         M = EliminaciosMatrix(matrix=None, size=n)
         pivot = U[j, j]
+
+        # elimináció
         for i in range(j+1, U.shape[1]):
             M[i, j] = - U[i, j] / pivot
 
@@ -118,6 +125,7 @@ def lu(A: ndarray, verbose=False):
         U = M.matrix @ U  # @ == mátrix szorzás
 
     Ls = [m.invert_elim() for m in elim_matrixok]
+    Ls.reverse()
     L = EliminaciosMatrix(size=n)
 
     for l in Ls:
@@ -132,7 +140,7 @@ def lu(A: ndarray, verbose=False):
         print(f"L:\n{L}\nU:\n{U}")
         print("----------------------")
 
-    return L, U
+    return P, L.matrix, U
 
 
 def main():
@@ -143,9 +151,18 @@ def main():
         formatter={'float_kind': '{:.2f}'.format}
     )
 
-    A = np.array([[1, 1, 1, 1], [2, 1, 1, 3], [3, 1, 3, 2], [1, 1, 1, 1]], dtype=float)
+    # A = np.array([[1, 1, 1, 1], [2, 1, 1, 3], [3, 1, 3, 2], [1, 1, 5, 3]], dtype=float)
 
-    lu(A, verbose=True)
+    A = np.array([[1, 1, 0], [2, 1, 0], [3, 1, 1]])
+
+    P, L, U = lu(A, verbose=False)
+
+    # Check reconstruction
+    reconstructed_A = P @ A
+    LU = L @ U
+    print("Reconstructed A (P * A):\n", reconstructed_A)
+    print("L * U:\n", LU)
+    print("Difference between P * A and L * U:\n", reconstructed_A - LU)
 
 
 if __name__ == "__main__":
