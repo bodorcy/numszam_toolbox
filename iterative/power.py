@@ -20,6 +20,7 @@ def power_method(A, v0=None, max_iterations=50, tol=1e-5, verbose=False, draw=Fa
     :param draw: a lépések kirajzolás
     :return: (sajátérték, sajátvektor)
     """
+    output = ""
     n, m = A.shape
     if n != m:
         raise ValueError("A mátrixnak négyzetesnek kell lennie.")
@@ -44,9 +45,17 @@ def power_method(A, v0=None, max_iterations=50, tol=1e-5, verbose=False, draw=Fa
             break
 
         if verbose:
-            print(f"b_{iteration} = {b_k1} | b_{iteration}_norm = {b_k1_norm} |"
-                  f"b_{iteration}_unit = {b_k1_unit} |"
-                  f"sajátérték becslés: {b_k1_norm / np.linalg.norm(b_k)}")
+            output += \
+                f"Iteráció {iteration}:\n" \
+                f"  b_{iteration}         = {np.round(b_k1, 4)}\n" \
+                f"  ||b_{iteration}||     = {np.round(b_k1_norm, 4)}\n" \
+                f"  b_{iteration} normált = {np.round(b_k1_unit, 4)}\n" \
+                f"  Sajátérték becslés    = {np.round(b_k1_norm / np.linalg.norm(b_k), 4)}\n\n"
+            """
+            print(f"b_{iteration} = {np.round(b_k1, 4)} | b_{iteration}_norm = {np.round(b_k1_norm, 4)} |"
+                  f"b_{iteration} normalizált = {np.round(b_k1_unit, 4)} |"
+                  f"sajátérték becslés: {np.round(b_k1_norm / np.linalg.norm(b_k), 4)}")
+            """
 
         b_k = b_k1_unit
 
@@ -61,7 +70,7 @@ def power_method(A, v0=None, max_iterations=50, tol=1e-5, verbose=False, draw=Fa
         plotter = VectorPlotter("Hatványmódszer", vectors)
         plotter.plot()
 
-    return eigenvalue, eigenvector
+    return eigenvalue, eigenvector, output
 
 
 def main():
@@ -82,7 +91,7 @@ def main():
     plt.show()
     pltr.save()
 
-    eigenvalue, eigenvector = power_method(A, v0=v0, verbose=True, draw=True)
+    eigenvalue, eigenvector, _ = power_method(A, v0=v0, verbose=True, draw=True)
 
     print("Legnagyobb sajátérték:", eigenvalue)
     print("Hozzátartozó sajátvektor:", eigenvector)
