@@ -1,73 +1,244 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>NumSzám feladatok</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script>
+  <style>
+
+  </style>
 </head>
 <body>
 
-  <div class="card">
-    <h2>Numszám feladat generátor</h2>
+  <div class="main-content">
+    <!-- Task Generator Card -->
+    <div class="card" id="exercise">
+      <h2>Numszám feladat generátor</h2>
 
-    <label for="topic">Feladat:</label><br>
-    <select id="topic">
-      <option value="lu">LU felbontás</option>
-      <option value="qr">QR felbontás</option>
-      <option value="cholesky">Cholesky felbontás</option>
-      <option value="power">Hatványmódszer</option>
-      <option value="lagrange">Lagrange polinom</option>
-    </select>
+      <label for="topic">Feladat:</label><br>
+      <select id="topic">
+        <option value="lu">LU felbontás</option>
+        <option value="qr">QR felbontás</option>
+        <option value="cholesky">Cholesky felbontás</option>
+        <option value="power">Hatványmódszer</option>
+        <option value="lagrange">Lagrange polinom</option>
+        <option value="gauss_seidel">Gauss-Seidel iteráció</option>
+      </select>
 
-    <br>
-    <button onclick="generateProblem()">Feladat kérése</button>
-    <button onclick="showSolution()">Megoldás</button>
+      <br>
+      <button onclick="generateProblem()">Feladat kérése</button>
+      <button onclick="showSolution()">Megoldás</button>
 
-    <div id="problem"></div>
-    <div id="solution"></div>
-    <img id="plot" style="display: none; max-width: 100%; margin: 10px auto;" />
+      <div id="problem"></div>
+      <div id="solution" style="display:none;"></div>
+      <img id="plot" style="display: none; max-width: 100%; margin: 10px auto;" />
+    </div>
 
+    <!-- History Card -->
+    <div class="card" id="history-card">
+      <h2>Előzmények</h2>
+      <button onclick="clearHistory()" style="background-color: #dc3545;">Törlés</button>
+      <ul id="history-list" style="list-style: none; padding: 0; margin-top: 1rem;"></ul>
+    </div>
+  </div>
+
+  <!-- Code Section at Bottom -->
+  <div class="code-section">
+    <h2>Algoritmus implementációk</h2>
+    <div class="code-box">
+      <pre><code class="language-python">
+def lu(A: ndarray):
+    n = A.shape[0]
+    elim_matrixok = []
+    U = A.copy()
+
+    for j in range(n):
+        pivot_sor = np.argmax(np.abs(U[j:, j])) + j
+        M = EliminaciosMatrix(matrix=None, size=n)
+        pivot = U[j, j]
+        for i in range(j+1, U.shape[1]):
+            M[i, j] = - U[i, j] / pivot
+        elim_matrixok.insert(0, M)
+        U = M.matrix @ U
+
+    Ls = [m.invert_elim() for m in elim_matrixok]
+    Ls.reverse()
+    L = EliminaciosMatrix(size=n)
+    for l in Ls:
+        L = L * l
+
+    return L.matrix, U, output
+      </code></pre>
+    </div>
+    <div class="code-box">
+      <pre><code class="language-python">
+def get_projection(u: ndarray, v: ndarray):
+
+  uv_skalarszorzat = np.dot(u, v)
+  uu_skalarszorzat = np.dot(u, u)
+
+  return (uv_skalarszorzat / uu_skalarszorzat) * u
+
+def qr(A):
+
+    n, m = A.shape[0], A.shape[1]
+    Q = np.zeros((n, m))  # Q n x m -es mátrix
+    R = np.zeros((m, m))
+
+    if n != m or abs(np.linalg.det(A)) < 1e-5:
+        print("Vigyázat, a mátrix (közel) szinguláris!")
+
+    for j in range(m):
+        v_oszlop = A[:, j]
+
+        for i in range(j):
+            R[i, j] = np.dot(Q[:, i], v_oszlop)  # R = Q' * A
+            v_oszlop = v_oszlop - get_projection(Q[:, i], v_oszlop)
+
+        # vektorokra kettes norma by default,
+        # itt nagy numerikus hiba keletkezik, ha pl norm(v) == sqrt(2)
+        R[j, j] = norm(v_oszlop)
+        v_oszlop = v_oszlop / R[j, j]
+
+        Q[:, j] = v_oszlop
+
+    return Q, R
+      </code></pre>
+    </div>
+    <div class="code-box">
+      <pre><code class="language-python">
+def chol(A: ndarray):
+
+    if not np.all(A == transpose(A)):
+        raise ValueError("Az A mátrix nem szimmetrikus!")
+    if not np.all(eigh(A)[0] > 0):  # eigh, mert szimmetrikus
+        raise ValueError("Nem minden sajátérték > 0.")
+
+    n = A.shape[0]
+    L = np.zeros_like(A)
+
+    for i in range(n):
+        for j in range(i + 1):
+            sum_k = np.dot(L[i, :j], L[j, :j])
+
+            if i == j:
+                L[i, j] = np.sqrt(A[i, i] - sum_k)
+            else:
+                L[i, j] = (A[i, j] - sum_k) / L[j, j]
+    return L
+      </code></pre>
+    </div>
+    <div class="code-box">
+      <pre><code class="language-python">
+def power_method(A, v0=None, max_iterations=50, tol=1e-5, verbose=False, draw=False):
+
+    output = ""
+    n, m = A.shape
+    if n != m:
+        raise ValueError("A mátrixnak négyzetesnek kell lennie.")
+
+    b_k = np.random.rand(n) if v0 is None else v0
+    vectors = [b_k]
+
+    for iteration in range(max_iterations):
+        b_k1 = A @ b_k
+
+        # normalizálás, kettes norma
+        b_k1_norm = np.linalg.norm(b_k1)
+        if b_k1_norm == 0:
+            raise ValueError("Nullvektor keletkezett, a mátrix (közel) szinguláris.")
+
+        # egységhosszú vektor
+        b_k1_unit = b_k1 / b_k1_norm
+
+        if np.linalg.norm(b_k1_unit - b_k) < tol:
+            if verbose:
+                print(f"Konvergált {iteration} iteráció után.")
+            break
+
+        b_k = b_k1_unit
+
+    # Rayleigh hányados
+    eigenvalue = (b_k.T @ A @ b_k) / (b_k.T @ b_k)
+    eigenvector = b_k
+
+    return eigenvalue, eigenvector
+
+      </code></pre>
+    </div>
+    <div class="code-box">
+      <pre><code class="language-python">
+def gauss_seidel(A, b, x0=None, tol=1e-10, max_iter=100):
+    n = len(A)
+    x = x0 if x0 else [0 for _ in range(n)]
+    for _ in range(max_iter):
+        x_new = x[:]
+        for i in range(n):
+            s1 = sum(A[i][j] * x_new[j] for j in range(i))
+            s2 = sum(A[i][j] * x[j] for j in range(i + 1, n))
+            x_new[i] = (b[i] - s1 - s2) / A[i][i]
+        if all(abs(x_new[i] - x[i]) < tol for i in range(n)):
+            break
+        x = x_new
+    return x
+      </code></pre>
+    </div>
   </div>
 
   <script>
-  let lastPlotPath = null;
+    let lastPlotPath = null;
+    const historyList = document.getElementById("history-list");
 
-  function generateProblem() {
-    const topic = document.getElementById("topic").value;
+    function generateProblem() {
+      const topic = document.getElementById("topic").value;
 
-    fetch("/get_problem", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ topic: topic }),
-    })
-    .then(response => response.json())
-    .then(data => {
-      document.getElementById("problem").innerText = data.problem;
-      document.getElementById("solution").innerText = data.solution;
-      document.getElementById("solution").style.display = "none";
+      fetch("/get_problem", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ topic: topic }),
+      })
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById("problem").innerText = data.problem;
+        document.getElementById("solution").innerText = data.solution;
+        document.getElementById("solution").style.display = "none";
 
-      if (data.plot) {
-        lastPlotPath = `${data.plot}?cb=${Date.now()}`;
-      } else {
-        lastPlotPath = null;
-        document.getElementById("plot").style.display = "none";
-      }
-    })
-    .catch(error => console.error("Error:", error));
-  }
+        const plot = document.getElementById("plot");
+        if (data.plot) {
+          lastPlotPath = `${data.plot}?cb=${Date.now()}`;
+        } else {
+          lastPlotPath = null;
+          plot.style.display = "none";
+        }
 
-  function showSolution() {
-    document.getElementById("solution").style.display = "block";
-
-    const plot = document.getElementById("plot");
-    if (lastPlotPath) {
-      plot.src = lastPlotPath;
-      plot.style.display = "block";
+        const li = document.createElement("li");
+        li.innerHTML = `
+          <details>
+            <summary><strong>${new Date().toLocaleTimeString()} – ${topic}</strong></summary>
+            <div><strong>Feladat:</strong><br>${data.problem.replace(/\n/g, "<br>")}</div>
+            <div style="margin-top: 0.5rem;"><strong>Megoldás:</strong><br>${data.solution.replace(/\n/g, "<br>")}</div>
+          </details>
+        `;
+        historyList.prepend(li);
+      })
+      .catch(error => console.error("Error:", error));
     }
-  }
-</script>
 
+    function showSolution() {
+      document.getElementById("solution").style.display = "block";
+      const plot = document.getElementById("plot");
+      if (lastPlotPath) {
+        plot.src = lastPlotPath;
+        plot.style.display = "block";
+      }
+    }
+
+    function clearHistory() {
+      historyList.innerHTML = "";
+    }
+  </script>
 </body>
 </html>
