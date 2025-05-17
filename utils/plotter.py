@@ -1,6 +1,9 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+from poly.polynomial import Polynomial, generate_base_points
+
+
 class Plotter:
     """
     Plotter ősosztály.
@@ -67,6 +70,9 @@ class VectorPlotter(Plotter):
             self.ax.quiver(0, 0, v[0], v[1], angles='xy', scale_units='xy', scale=1, color='r', alpha=1)
             plt.draw()
 
+    def add(self, vector):
+        self.data.append(vector)
+
     def plot(self):
         """
         Minden tárolt vektor kirajzolása.
@@ -109,18 +115,28 @@ class PolynomialPlotter(Plotter):
             self.ax.plot(x, y, label="Polynomial", color='b')
             plt.draw()
 
-        plt.show()
+    def add(self, poly):
+        self.data.append(poly)
 
-    def plot(self):
+    def plot(self, x1=-10, x2=10):
         """
         Minden tárolt polinom kirajzolása.
         """
         self.plot_setup()
 
-        x = np.linspace(-2, 2, 400)
+        x = np.linspace(x1, x2, 400)
         for poly in self.data:
             y = poly.evaluate(x)
             self.ax.plot(x, y, label="Polynomial", color='b')
             plt.draw()
 
-        self.show()
+    def plot_points(self, points: list, hold=False):
+        """
+        2D-s pont kirajzolása.
+        """
+        self.plot_setup()
+
+        if not hold:
+            for point in points:
+                self.ax.plot(point[0], point[1], color='r', marker='x')
+                plt.draw()
