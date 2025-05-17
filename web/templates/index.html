@@ -25,32 +25,49 @@
 
     <div id="problem"></div>
     <div id="solution"></div>
+    <img id="plot" style="display: none; max-width: 100%; margin: 10px auto;" />
+
   </div>
 
   <script>
-    function generateProblem() {
-  const topic = document.getElementById("topic").value;
+  let lastPlotPath = null;
 
-  fetch("/get_problem", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ topic: topic }),
-  })
-  .then(response => response.json())
-  .then(data => {
-    document.getElementById("problem").innerText = data.problem;
-    document.getElementById("solution").innerText = data.solution;
-    document.getElementById("solution").style.display = "none";
-  })
-  .catch(error => console.error("Error:", error));
-}
+  function generateProblem() {
+    const topic = document.getElementById("topic").value;
 
-    function showSolution() {
-      document.getElementById("solution").style.display = "block";
+    fetch("/get_problem", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ topic: topic }),
+    })
+    .then(response => response.json())
+    .then(data => {
+      document.getElementById("problem").innerText = data.problem;
+      document.getElementById("solution").innerText = data.solution;
+      document.getElementById("solution").style.display = "none";
+
+      if (data.plot) {
+        lastPlotPath = `${data.plot}?cb=${Date.now()}`;
+      } else {
+        lastPlotPath = null;
+        document.getElementById("plot").style.display = "none";
+      }
+    })
+    .catch(error => console.error("Error:", error));
+  }
+
+  function showSolution() {
+    document.getElementById("solution").style.display = "block";
+
+    const plot = document.getElementById("plot");
+    if (lastPlotPath) {
+      plot.src = lastPlotPath;
+      plot.style.display = "block";
     }
-  </script>
+  }
+</script>
 
 </body>
 </html>
