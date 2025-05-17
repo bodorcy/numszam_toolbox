@@ -33,10 +33,10 @@ def qr(A, verbose=False):
     n, m = A.shape[0], A.shape[1]
     Q = np.zeros((n, m))  # Q n x m -es mátrix
     R = np.zeros((m, m))
+    output = []
 
     if n != m or abs(np.linalg.det(A)) < 1e-5:
         print("Vigyázat, a mátrix (közel) szinguláris!")
-
 
     for j in range(m):
         v_oszlop = A[:, j]
@@ -51,16 +51,14 @@ def qr(A, verbose=False):
         v_oszlop = v_oszlop / R[j, j]
 
         if verbose:
-            print(f"Az A {j + 1}. oszlopának ortonormált vekotra:"
-                  f"{v_oszlop}^T")
+            output.append(f"Az A {j + 1}. oszlopának ortonormált vekotra:\n"
+                  f"{v_oszlop}^T\n")
 
         Q[:, j] = v_oszlop
 
-    if verbose:
-        print(f"Q:\n{Q}\nR:\n{R}")
-        print("----------------------")
+    output = "\n".join(output)
 
-    return Q, R
+    return Q, R, output
 
 
 def main():
