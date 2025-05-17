@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 
 class Plotter:
     """
-    Alap osztály, amely közös funkcionalitást biztosít a különböző típusú plottokhoz.
+    Plotter ősosztály.
     """
     def __init__(self, f_name="Plot", data: list = None):
         self.data = [] if data is None else data.copy()
@@ -109,13 +109,15 @@ class PolynomialPlotter(Plotter):
             self.ax.plot(x, y, label="Polynomial", color='b')
             plt.draw()
 
+        plt.show()
+
     def plot(self):
         """
         Minden tárolt polinom kirajzolása.
         """
         self.plot_setup()
 
-        x = np.linspace(-10, 10, 400)
+        x = np.linspace(-2, 2, 400)
         for poly in self.data:
             y = poly.evaluate(x)
             self.ax.plot(x, y, label="Polynomial", color='b')

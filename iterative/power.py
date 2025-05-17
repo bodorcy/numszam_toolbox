@@ -5,7 +5,7 @@ Hatványmódszer megvalísitás, kirajzolással.
 import numpy as np
 import matplotlib.pyplot as plt
 #from utils.plot_vector import VectorPlotter
-from utils.Plotter import VectorPlotter
+from utils.plotter import VectorPlotter
 
 
 def power_method(A, v0=None, max_iterations=50, tol=1e-5, verbose=False, draw=False):

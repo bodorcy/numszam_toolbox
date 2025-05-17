@@ -1,6 +1,6 @@
 import unittest
 import numpy as np
-from decomp.cholesky import chol  # Replace with the actual path to your chol function
+from decomp.cholesky import chol
 
 
 class TestCholeskyDecomposition(unittest.TestCase):
