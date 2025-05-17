@@ -81,12 +81,11 @@ def lu(A: ndarray, verbose=False):
     :param verbose: Ha True, akkor kiírja a lépéseket.
     :type verbose: bool
 
-    :returns: Egy háromtagú tuple (L, U, P), ahol:
+    :returns: Egy háromtagú tuple (L, U), ahol:
               - L (ndarray): Alsó, nxn-es háromszög mátrix, a főátlóban 1-ekkel.\n
               - U (ndarray): Felső háromszögmátrix.\n
-              - P (ndarray): Permutációs mátrix, ami a pivotálásokat írja le.
 
-    :rtype: (ndarray, ndarray, ndarray)
+    :rtype: (ndarray, ndarray)
 
     :raises ValueError: Ha A nem négyzetes, vagy a pivotálás nem végezhető el.
     """
@@ -102,18 +101,18 @@ def lu(A: ndarray, verbose=False):
     n = A.shape[0]  # már biztos, hogy négyzetes
     elim_matrixok = []
     U = A.copy()
-    P = np.eye(n) # permutációs mátrix
+    #P = np.eye(n) # permutációs mátrix
 
     for j in range(n):  # j == oszlop
         pivot_sor = np.argmax(np.abs(U[j:, j])) + j
 
-        if np.abs(U[pivot_sor, j]) < 1e-6:
+        """if np.abs(U[pivot_sor, j]) < 1e-6:
             raise ValueError("A felbontás nem végezhető el stabilan, a mátrix (közel) szinguláris!")
 
         if pivot_sor != j:  # egy másik sorban van megfelelő pivot elem
             U[[j, pivot_sor], :] = U[[pivot_sor, j], :]  # sorcsere hackkelés
             P[[j, pivot_sor], :] = P[[pivot_sor, j], :]
-
+"""
         M = EliminaciosMatrix(matrix=None, size=n)
         pivot = U[j, j]
 
@@ -140,7 +139,7 @@ def lu(A: ndarray, verbose=False):
         print(f"L:\n{L}\nU:\n{U}")
         print("----------------------")
 
-    return P, L.matrix, U
+    return L.matrix, U
 
 
 def main():
@@ -155,14 +154,14 @@ def main():
 
     A = np.array([[1, 1, 0], [2, 1, 0], [3, 1, 1]])
 
-    P, L, U = lu(A, verbose=False)
+    L, U = lu(A, verbose=False)
 
     # Check reconstruction
-    reconstructed_A = P @ A
+    reconstructed_A = A
     LU = L @ U
     print("Reconstructed A (P * A):\n", reconstructed_A)
     print("L * U:\n", LU)
-    print("Difference between P * A and L * U:\n", reconstructed_A - LU)
+    print("Difference between P A and L * U:\n", reconstructed_A - LU)
 
 
 if __name__ == "__main__":
