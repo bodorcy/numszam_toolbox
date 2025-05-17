@@ -47,10 +47,10 @@ def power_method(A, v0=None, max_iterations=50, tol=1e-5, verbose=False, draw=Fa
         if verbose:
             output += \
                 f"Iteráció {iteration}:\n" \
-                f"  b_{iteration}         = {np.round(b_k1, 4)}\n" \
-                f"  ||b_{iteration}||     = {np.round(b_k1_norm, 4)}\n" \
-                f"  b_{iteration} normált = {np.round(b_k1_unit, 4)}\n" \
-                f"  Sajátérték becslés    = {np.round(b_k1_norm / np.linalg.norm(b_k), 4)}\n\n"
+                f"  b_{iteration} =\n{np.round(b_k1, 4)}\n" \
+                f"  ||b_{iteration}|| = {np.round(b_k1_norm, 4)}\n" \
+                f"  b_{iteration} normált =\n{np.round(b_k1_unit, 4)}\n" \
+                f"  Sajátérték becslés = {np.round(b_k1_norm / np.linalg.norm(b_k), 4)}\n\n"
             """
             print(f"b_{iteration} = {np.round(b_k1, 4)} | b_{iteration}_norm = {np.round(b_k1_norm, 4)} |"
                   f"b_{iteration} normalizált = {np.round(b_k1_unit, 4)} |"

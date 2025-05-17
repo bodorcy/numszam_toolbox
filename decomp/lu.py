@@ -5,6 +5,8 @@ LU felbontás.
 import numpy as np
 from numpy import ndarray
 
+from utils.matrix_utils import pretty_print_matrix
+
 
 class EliminaciosMatrix:
     """
@@ -81,11 +83,12 @@ def lu(A: ndarray, verbose=False):
     :param verbose: Ha True, akkor kiírja a lépéseket.
     :type verbose: bool
 
-    :returns: Egy háromtagú tuple (L, U), ahol:
+    :returns: Egy háromtagú tuple (L, U, output), ahol:
               - L (ndarray): Alsó, nxn-es háromszög mátrix, a főátlóban 1-ekkel.\n
               - U (ndarray): Felső háromszögmátrix.\n
+              - output (ndarray): Ha verbose == True, akkor köztes infót is kapunk
 
-    :rtype: (ndarray, ndarray)
+    :rtype: (ndarray, ndarray, list)
 
     :raises ValueError: Ha A nem négyzetes, vagy a pivotálás nem végezhető el.
     """
@@ -98,6 +101,7 @@ def lu(A: ndarray, verbose=False):
     if verbose:
         print("------- LU felbontás -------")
 
+    output = []
     n = A.shape[0]  # már biztos, hogy négyzetes
     elim_matrixok = []
     U = A.copy()
@@ -131,15 +135,13 @@ def lu(A: ndarray, verbose=False):
         L = L * l
 
     if verbose:
-        print("Eliminációs mátrixok: (Mn * Mn-1 * Mn-2 * ... * M1 * A)")
+        output.append("Eliminációs mátrixok\n(Mn * Mn-1 * Mn-2 * ... * M1 * A):\n")
         n = len(elim_matrixok)
         for m in elim_matrixok:
-            print(f"M{n}\n{m.matrix}")
+            output.append(f"M{n}\n{pretty_print_matrix(m.matrix)}\n")
             n -= 1
-        print(f"L:\n{L}\nU:\n{U}")
-        print("----------------------")
 
-    return L.matrix, U
+    return L.matrix, U, output
 
 
 def main():
@@ -154,7 +156,7 @@ def main():
 
     A = np.array([[1, 1, 0], [2, 1, 0], [3, 1, 1]])
 
-    L, U = lu(A, verbose=False)
+    L, U, outputstr = lu(A, verbose=True)
 
     # Check reconstruction
     reconstructed_A = A
