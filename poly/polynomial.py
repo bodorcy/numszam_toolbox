@@ -1,4 +1,3 @@
-from utils.plotter import PolynomialPlotter
 
 """
 Polinom vektoros reprezentációja.
@@ -75,7 +74,6 @@ class Polynomial:
         return prod
 
 
-
 class LagrangePolynomial(Polynomial):
     def __init__(self, points):
         """
@@ -108,33 +106,28 @@ class LagrangePolynomial(Polynomial):
                 if i == j:
                     continue
                 xj = self.points[j][0]
-                # Multiply numerator by (x - xj)
+                # multiply numerator by (x - xj)
                 numerator = np.convolve(numerator, [1.0, -xj])  # konvolúció == polinomszorzás
                 denominator *= (xi - xj)
 
             Li = numerator / denominator
             poly_result = np.pad(poly_result, (len(Li) - len(poly_result), 0))
 
-            self.sub_polinomials.append(Polynomial(Li))
+            self._sub_polinomials.append(Polynomial(Li))
 
             poly_result += np.pad(Li * yi, (len(poly_result) - len(Li), 0))
 
         return poly_result
 
-    def __str__(self):
-        return (f"{[(float(p[0]), float(p[1])) for p in self.points]}\n"
-                f"pontokhoz tartozó Lagrange polinom: {super().__str__()}")
-
     def interpolation_points(self):
         return self.points
 
-lag_poly = LagrangePolynomial([(1, 2), (2, 3), (3, 5)])
-print(lag_poly)              # Pretty-print polynomial
-print(lag_poly.evaluate(2))  # Evaluate at x = 2 (should return ~3)
-print(lag_poly.coeffs)       # Show polynomial coefficients
-print(lag_poly.interpolation_points())  # Original points
-print(lag_poly.sub_polinomials)
+def generate_base_points(n):
+    base_points = []
+    domain = [x for x in range(-6, 6)]
 
+    for i in range(n):
+        base_points.append((domain.pop(np.random.randint(0, len(domain))),
+                             np.random.randint(-6, 6)))
 
-pplot = PolynomialPlotter(polynomials=lag_poly.sub_polinomials)
-pplot.plot()
+    return base_points
