@@ -1,3 +1,5 @@
+from utils.plotter import PolynomialPlotter
+
 """
 Polinom vektoros reprezentációja.
 """
@@ -75,4 +77,64 @@ class Polynomial:
 
 
 class LagrangePolynomial(Polynomial):
-    pass
+    def __init__(self, points):
+        """
+        Lagrange polinom konstruktor
+        :param points: (x, y) tuples
+        """
+        self.points = np.array(points)
+        self._sub_polinomials = []
+        coeffs = self._compute_coefficients()
+        super().__init__(coeffs)
+
+    @property
+    def sub_polinomials(self):
+        return self._sub_polinomials
+
+    def _compute_coefficients(self):
+        """
+        Lagrange polinom felépítése.
+        """
+        n = len(self.points)
+        result = np.zeros(n)
+        poly_result = np.zeros(1)
+
+        for i in range(n):
+            xi, yi = self.points[i]
+            numerator = np.array([1.0])  # polinom "1"
+            denominator = 1.0
+
+            for j in range(n):
+                if i == j:
+                    continue
+                xj = self.points[j][0]
+                # Multiply numerator by (x - xj)
+                numerator = np.convolve(numerator, [1.0, -xj])  # konvolúció == polinomszorzás
+                denominator *= (xi - xj)
+
+            Li = numerator / denominator
+            poly_result = np.pad(poly_result, (len(Li) - len(poly_result), 0))
+
+            self.sub_polinomials.append(Polynomial(Li))
+
+            poly_result += np.pad(Li * yi, (len(poly_result) - len(Li), 0))
+
+        return poly_result
+
+    def __str__(self):
+        return (f"{[(float(p[0]), float(p[1])) for p in self.points]}\n"
+                f"pontokhoz tartozó Lagrange polinom: {super().__str__()}")
+
+    def interpolation_points(self):
+        return self.points
+
+lag_poly = LagrangePolynomial([(1, 2), (2, 3), (3, 5)])
+print(lag_poly)              # Pretty-print polynomial
+print(lag_poly.evaluate(2))  # Evaluate at x = 2 (should return ~3)
+print(lag_poly.coeffs)       # Show polynomial coefficients
+print(lag_poly.interpolation_points())  # Original points
+print(lag_poly.sub_polinomials)
+
+
+pplot = PolynomialPlotter(polynomials=lag_poly.sub_polinomials)
+pplot.plot()
