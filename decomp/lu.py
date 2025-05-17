@@ -105,18 +105,9 @@ def lu(A: ndarray, verbose=False):
     n = A.shape[0]  # már biztos, hogy négyzetes
     elim_matrixok = []
     U = A.copy()
-    #P = np.eye(n) # permutációs mátrix
 
     for j in range(n):  # j == oszlop
-        pivot_sor = np.argmax(np.abs(U[j:, j])) + j
 
-        """if np.abs(U[pivot_sor, j]) < 1e-6:
-            raise ValueError("A felbontás nem végezhető el stabilan, a mátrix (közel) szinguláris!")
-
-        if pivot_sor != j:  # egy másik sorban van megfelelő pivot elem
-            U[[j, pivot_sor], :] = U[[pivot_sor, j], :]  # sorcsere hackkelés
-            P[[j, pivot_sor], :] = P[[pivot_sor, j], :]
-"""
         M = EliminaciosMatrix(matrix=None, size=n)
         pivot = U[j, j]
 
@@ -142,29 +133,3 @@ def lu(A: ndarray, verbose=False):
             n -= 1
 
     return L.matrix, U, output
-
-
-def main():
-    """asd"""
-    np.set_printoptions(
-        precision=4,
-        suppress=True,  #
-        formatter={'float_kind': '{:.2f}'.format}
-    )
-
-    # A = np.array([[1, 1, 1, 1], [2, 1, 1, 3], [3, 1, 3, 2], [1, 1, 5, 3]], dtype=float)
-
-    A = np.array([[1, 1, 0], [2, 1, 0], [3, 1, 1]])
-
-    L, U, outputstr = lu(A, verbose=True)
-
-    # Check reconstruction
-    reconstructed_A = A
-    LU = L @ U
-    print("Reconstructed A (P * A):\n", reconstructed_A)
-    print("L * U:\n", LU)
-    print("Difference between P A and L * U:\n", reconstructed_A - LU)
-
-
-if __name__ == "__main__":
-    main()

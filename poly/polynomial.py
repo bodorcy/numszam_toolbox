@@ -5,8 +5,13 @@ Polinom vektoros reprezentációja.
 
 import numpy as np
 
+
 class Polynomial:
     def __init__(self, coeffs=None):
+        """
+        Polinom reprezentálására szolgáló osztály.
+        :param coeffs: polinom együtthatói fokszám szerint csökkenő sorrendben (x^2 + 4) == [1, 0, 4]
+        """
         self._coeffs = np.array([]) if coeffs is None else np.array(coeffs)
 
     @property
@@ -32,12 +37,12 @@ class Polynomial:
         return " + ".join(terms) if terms else "0"
 
     def __getitem__(self, index):
-        if not (0 <= index <= len(self)):
+        if not 0 <= index <= len(self):
             raise IndexError("Index out of range")
         return self.coeffs[index]
 
     def __setitem__(self, index, value):
-        if not (0 <= index <= len(self)):
+        if not 0 <= index <= len(self):
             raise IndexError("Index out of range")
         self.coeffs[index] = value
 
@@ -94,7 +99,7 @@ class LagrangePolynomial(Polynomial):
         Lagrange polinom felépítése.
         """
         n = len(self.points)
-        result = np.zeros(n)
+
         poly_result = np.zeros(1)
 
         for i in range(n):
@@ -122,12 +127,17 @@ class LagrangePolynomial(Polynomial):
     def interpolation_points(self):
         return self.points
 
-def generate_base_points(n):
+
+def generate_base_points(n: int) -> list:
+    """
+    Random 2D-s alappontok generálása. Bármely két pont x koordinátája különboző.
+    :param n: generált alappntok száma
+    :return: list of (int, int)
+    """
     base_points = []
     domain = [x for x in range(-6, 6)]
 
     for i in range(n):
         base_points.append((domain.pop(np.random.randint(0, len(domain))),
                              np.random.randint(-6, 6)))
-
     return base_points

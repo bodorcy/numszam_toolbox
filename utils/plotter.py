@@ -1,8 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-from poly.polynomial import Polynomial, generate_base_points
-
 
 class Plotter:
     """
@@ -67,7 +65,9 @@ class VectorPlotter(Plotter):
         self.plot_setup()
 
         if not hold:
-            self.ax.quiver(0, 0, v[0], v[1], angles='xy', scale_units='xy', scale=1, color='r', alpha=1)
+            self.ax.quiver(0, 0, v[0], v[1],
+                           angles='xy', scale_units='xy',
+                           scale=1, color='r', alpha=1)
             plt.draw()
 
     def add(self, vector):
@@ -86,7 +86,9 @@ class VectorPlotter(Plotter):
 
         alpha = 0.7
         for i, v in enumerate(self.data):
-            self.ax.quiver(0, 0, v[0], v[1], angles='xy', scale_units='xy', scale=1, color='r', alpha=alpha)
+            self.ax.quiver(0, 0, v[0], v[1],
+                           angles='xy', scale_units='xy',
+                           scale=1, color='r', alpha=alpha)
             self.ax.text(v[0] * 1, v[1] * 1, f"{i}", fontsize=10, alpha=alpha)
             plt.draw()
             alpha *= 0.9

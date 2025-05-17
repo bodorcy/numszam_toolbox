@@ -1,11 +1,13 @@
 from flask import Flask, render_template, jsonify, request
-from problems.generators import generate_problem
+from web import generate_problem
 
 app = Flask(__name__)
+
 
 @app.route("/")
 def home():
     return render_template("index.html")
+
 
 @app.route("/get_problem", methods=["POST"])
 def get_problem():

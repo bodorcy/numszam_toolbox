@@ -33,18 +33,3 @@ def chol(A: ndarray):
                 L[i, j] = (A[i, j] - sum_k) / L[j, j]
 
     return L
-
-
-def main():
-    """
-    asd
-    """
-    A = np.array([[4, 12, -16],
-                  [12, 37, -43],
-                  [-16, -43, 98]], dtype=float)
-
-    l = chol(A)
-
-
-if __name__ == '__main__':
-    main()

@@ -3,10 +3,7 @@ Hatványmódszer megvalísitás, kirajzolással.
 """
 
 import numpy as np
-import matplotlib.pyplot as plt
-#from utils.plot_vector import VectorPlotter
 from utils.plotter import VectorPlotter
-
 
 def power_method(A, v0=None, max_iterations=50, tol=1e-5, verbose=False, draw=False):
     """
@@ -51,11 +48,6 @@ def power_method(A, v0=None, max_iterations=50, tol=1e-5, verbose=False, draw=Fa
                 f"  ||b_{iteration}|| = {np.round(b_k1_norm, 4)}\n" \
                 f"  b_{iteration} normált =\n{np.round(b_k1_unit, 4)}\n" \
                 f"  Sajátérték becslés = {np.round(b_k1_norm / np.linalg.norm(b_k), 4)}\n\n"
-            """
-            print(f"b_{iteration} = {np.round(b_k1, 4)} | b_{iteration}_norm = {np.round(b_k1_norm, 4)} |"
-                  f"b_{iteration} normalizált = {np.round(b_k1_unit, 4)} |"
-                  f"sajátérték becslés: {np.round(b_k1_norm / np.linalg.norm(b_k), 4)}")
-            """
 
         b_k = b_k1_unit
 
@@ -71,31 +63,3 @@ def power_method(A, v0=None, max_iterations=50, tol=1e-5, verbose=False, draw=Fa
         plotter.plot()
 
     return eigenvalue, eigenvector, output
-
-
-def main():
-    """ asd """
-    A = np.array([[2, 1],
-                  [1, 3]], dtype=float)
-
-    D, V = np.linalg.eig(A)
-
-    v_rho = V[:, np.argmax(D)]
-
-    pltr = VectorPlotter("eigen")
-
-    v0 = np.array([-v_rho[1]+1e-3, v_rho[0]])
-
-    pltr.plot_single(v0)
-    pltr.plot_single(v_rho, True)
-    plt.show()
-    pltr.save()
-
-    eigenvalue, eigenvector, _ = power_method(A, v0=v0, verbose=True, draw=True)
-
-    print("Legnagyobb sajátérték:", eigenvalue)
-    print("Hozzátartozó sajátvektor:", eigenvector)
-
-
-if __name__ == "__main__":
-    main()

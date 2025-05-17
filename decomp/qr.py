@@ -6,6 +6,7 @@ import numpy as np
 from numpy import ndarray
 from numpy.linalg import norm
 
+
 def get_projection(u: ndarray, v: ndarray):
     """
     Gram-Schmidt eljárás-ban szereplő vektor projekció elvégzése.
@@ -52,31 +53,10 @@ def qr(A, verbose=False):
 
         if verbose:
             output.append(f"Az A {j + 1}. oszlopának ortonormált vekotra:\n"
-                  f"{v_oszlop}^T\n")
+                          f"{v_oszlop}^T\n")
 
         Q[:, j] = v_oszlop
 
     output = "\n".join(output)
 
     return Q, R, output
-
-
-def main():
-    """
-    asd
-    """
-    np.set_printoptions(
-        precision=4,
-        suppress=True,  #
-        formatter={'float_kind': '{:.2f}'.format}
-    )
-
-    A = np.array([[0, 3], [2, 0]])
-
-    Q, R = qr(A, verbose=True)
-
-    print(Q @ R)
-
-
-if __name__ == '__main__':
-    main()

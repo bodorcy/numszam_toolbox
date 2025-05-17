@@ -1,12 +1,9 @@
-import numpy as np
-import decomp.cholesky as cholesky
-from decomp.lu import lu
-from decomp.qr import qr
-from iterative.gauss_seidel import gauss_seidel
-from iterative.power import power_method
-from utils.matrix_utils import get_random_regular_matrix, get_random_positive_def_matrix, pretty_print_matrix
-from poly.polynomial import LagrangePolynomial, generate_base_points
+from decomp import lu, qr, chol
+from iterative import power_method, gauss_seidel
+from utils import pretty_print_matrix, get_random_regular_matrix, get_random_positive_def_matrix
 from utils.plotter import PolynomialPlotter
+from poly import LagrangePolynomial, generate_base_points
+import numpy as np
 
 
 def generate_lu():
@@ -25,8 +22,10 @@ def generate_lu():
         f"\n\n{output_str}"
 
     )
+
+
 def generate_qr():
-    n = np.random.randint(2,4)
+    n = np.random.randint(2, 4)
     A = get_random_regular_matrix(n)
     Q, R, output = qr(A, True)
 
@@ -36,43 +35,53 @@ def generate_qr():
         f"Q =\n{pretty_print_matrix(Q)}\nR =\n{pretty_print_matrix(R)}"
         f"\n\n{output}"
     )
+
+
 def generate_cholesky():
     n = np.random.randint(2, 4)
     A = get_random_positive_def_matrix(n)
-    L = cholesky.chol(A)
+    L = chol(A)
     return (
-        f"Végezdd el a Cholesky felbontást a következő mátrixon:\n{pretty_print_matrix(A)}\n",
+        f"Végezdd el a Cholesky felbontást a következő mátrixon:"
+        f"\n{pretty_print_matrix(A)}\n",
         f"L =\n{pretty_print_matrix(L)}"
     )
+
+
 def generate_power():
-    n = np.random.randint(2,4)
+    n = np.random.randint(2, 4)
     iterations = np.random.randint(2, 4)
     A = get_random_regular_matrix(n)
     v0 = np.random.randint(-3, 3, size=(n, 1))
 
-    eigenvalue, eigenvector, out = power_method(A, v0=v0, max_iterations=iterations+1, verbose=True)
+    eigenvalue, eigenvector, out = power_method(
+        A, v0=v0, max_iterations=iterations+1, verbose=True)
 
     return (
-        f"Hajts végre az alábbi kezdővektoron (x0) és mátrixon a hatványmódszermódszerrel {iterations} iterációt!\n"
-        f"Mi a spektrálsugár közelítése ennyi itaráció után?\nx0 =\n{pretty_print_matrix(v0, 0)}\n"
+        f"Hajts végre az alábbi kezdővektoron (x0)"
+        f"és mátrixon a hatványmódszermódszerrel {iterations} iterációt!\n"
+        f"Mi a spektrálsugár közelítése ennyi itaráció után?\n"
+        f"x0 =\n{pretty_print_matrix(v0, 0)}\n"
         f"A =\n{pretty_print_matrix(A)}\n",
         f"Spektrálsugár közelítés: {np.round(eigenvalue, 2)}\nIterációk: {out}"
     )
+
+
 def generate_lagrange():
     n = np.random.randint(2, 5)
     path = "static/pn.jpg"
 
     bps = generate_base_points(n)
     pn = LagrangePolynomial(bps)
-    plotter = PolynomialPlotter()
-    plotter.add(pn)
+    pplotter = PolynomialPlotter()
+    pplotter.add(pn)
 
     x1 = min([p[0] for p in bps])
     x2 = max([p[0] for p in bps])
 
-    plotter.plot(x1, x2)
-    plotter.plot_points(bps)
-    plotter.save(path)
+    pplotter.plot(x1, x2)
+    pplotter.plot_points(bps)
+    pplotter.save(path)
 
     Li = pn.sub_polinomials
 
@@ -86,6 +95,8 @@ def generate_lagrange():
         f"Részpolinomok:\n{Li_str}",
         path
     )
+
+
 def generate_gauss_seidel():
     n = np.random.randint(2, 4)
     A = get_random_regular_matrix(n)
@@ -100,8 +111,12 @@ def generate_gauss_seidel():
         solution_text += f"Iteráció {i}:\n{pretty_print_matrix(step)}\n\n"
 
     return (
-        f"Közelítsd alábbi lineáris egyenletrendszer megoldását Gauss-Seidel iterációval ({iterations} lépés):\n"
-        f"A =\n{pretty_print_matrix(A)}\nb =\n{pretty_print_matrix(b)}\nx0 =\n{pretty_print_matrix(x0)}",
+        f"Közelítsd alábbi lineáris egyenletrendszer megoldását "
+        f"Gauss-Seidel iterációval"
+        f"({iterations} lépés):\n"
+        f"A =\n{pretty_print_matrix(A)}\n"
+        f"b =\n{pretty_print_matrix(b)}\n"
+        f"x0 =\n{pretty_print_matrix(x0)}",
         solution_text
     )
 
