@@ -5,7 +5,7 @@ LU felbontás.
 import numpy as np
 from numpy import ndarray
 
-from src.numszam_toolbox_szte.utils.matrix_utils import pretty_print_matrix
+from numszam_toolbox_szte.utils import pretty_print_matrix
 
 
 class EliminaciosMatrix:

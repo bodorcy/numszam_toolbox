@@ -3,7 +3,8 @@ Hatványmódszer megvalísitás, kirajzolással.
 """
 
 import numpy as np
-from src.numszam_toolbox_szte.utils.plotter import VectorPlotter
+from numszam_toolbox_szte.utils import pretty_print_matrix
+from numszam_toolbox_szte.utils.plotter import VectorPlotter
 
 def power_method(A, v0=None, max_iterations=50, tol=1e-5, verbose=False, draw=False):
     """
@@ -43,11 +44,10 @@ def power_method(A, v0=None, max_iterations=50, tol=1e-5, verbose=False, draw=Fa
 
         if verbose:
             output += \
-                f"Iteráció {iteration}:\n" \
-                f"  b_{iteration} =\n{np.round(b_k1, 4)}\n" \
-                f"  ||b_{iteration}|| = {np.round(b_k1_norm, 4)}\n" \
-                f"  b_{iteration} normált =\n{np.round(b_k1_unit, 4)}\n" \
-                f"  Sajátérték becslés = {np.round(b_k1_norm / np.linalg.norm(b_k), 4)}\n\n"
+                f"Iteráció {iteration+1}:\n" \
+                f"b_{iteration+1} =\n{pretty_print_matrix(np.round(b_k1, 4))}\n" \
+                f"\t\t||b_{iteration+1}|| = {np.round(b_k1_norm, 4)}\n" \
+                f"b_{iteration+1} normált =\n{np.round(b_k1_unit, 4)}\n\n" \
 
         b_k = b_k1_unit
 
