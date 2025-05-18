@@ -1,0 +1,32 @@
+pylint --disable=invalid-name,missing-function-docstring,missing-module-docstring
+
+************* Module test.test_problems
+test/test_problems.py:39:8: W0632: Possible unbalanced tuple unpacking with sequence defined at line 135 of src.numszam_toolbox_szte.web.problems.generators: left side has 3 labels, right side has 2 values (unbalanced-tuple-unpacking)
+************* Module test.test_app
+test/test_app.py:10:30: W0621: Redefining name 'client' from outer scope (line 8) (redefined-outer-name)
+test/test_app.py:14:20: W0621: Redefining name 'client' from outer scope (line 8) (redefined-outer-name)
+test/test_app.py:20:33: W0621: Redefining name 'client' from outer scope (line 8) (redefined-outer-name)
+test/test_app.py:28:30: W0621: Redefining name 'client' from outer scope (line 8) (redefined-outer-name)
+test/test_app.py:43:35: W0621: Redefining name 'client' from outer scope (line 8) (redefined-outer-name)
+************* Module src.numszam_toolbox_szte.poly.polynomial
+src/numszam_toolbox_szte/poly/polynomial.py:13:0: C0301: Line too long (101/100) (line-too-long)
+src/numszam_toolbox_szte/poly/polynomial.py:9:0: C0115: Missing class docstring (missing-class-docstring)
+src/numszam_toolbox_szte/poly/polynomial.py:52:8: C0200: Consider using enumerate instead of iterating with range and len (consider-using-enumerate)
+src/numszam_toolbox_szte/poly/polynomial.py:53:12: C0200: Consider using enumerate instead of iterating with range and len (consider-using-enumerate)
+src/numszam_toolbox_szte/poly/polynomial.py:82:0: C0115: Missing class docstring (missing-class-docstring)
+src/numszam_toolbox_szte/poly/polynomial.py:138:13: R1721: Unnecessary use of a comprehension, use list(range(-6, 6)) instead. (unnecessary-comprehension)
+src/numszam_toolbox_szte/poly/polynomial.py:140:8: W0612: Unused variable 'i' (unused-variable)
+************* Module src.numszam_toolbox_szte.web.problems.generators
+src/numszam_toolbox_szte/web/problems/generators.py:4:0: C0301: Line too long (117/100) (line-too-long)
+src/numszam_toolbox_szte/web/problems/generators.py:79:9: R1728: Consider using a generator instead 'min(p[0] for p in bps)' (consider-using-generator)
+src/numszam_toolbox_szte/web/problems/generators.py:80:9: R1728: Consider using a generator instead 'max(p[0] for p in bps)' (consider-using-generator)
+************* Module src.numszam_toolbox_szte.iterative.power
+src/numszam_toolbox_szte/iterative/power.py:10:0: R0913: Too many arguments (6/5) (too-many-arguments)
+src/numszam_toolbox_szte/iterative/power.py:10:0: R0917: Too many positional arguments (6/5) (too-many-positional-arguments)
+src/numszam_toolbox_szte/iterative/power.py:10:0: R0914: Too many local variables (18/15) (too-many-locals)
+************* Module src.numszam_toolbox_szte.iterative.gauss_seidel
+src/numszam_toolbox_szte/iterative/gauss_seidel.py:21:8: W0612: Unused variable 'k' (unused-variable)
+
+------------------------------------------------------------------
+Your code has been rated at 9.67/10 (previous run: 9.59/10, +0.08)
+

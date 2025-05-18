@@ -1,0 +1,45 @@
+============================= test session starts ==============================
+platform linux -- Python 3.10.12, pytest-8.3.5, pluggy-1.6.0
+rootdir: /home/bodorcy/PycharmProjects/numszam_toolbox/numszam_toolbox
+configfile: pyproject.toml
+plugins: cov-6.1.1
+collected 30 items
+
+test_app.py ....                                                         [ 13%]
+test_decomp.py ...                                                       [ 23%]
+test_iterative.py ..                                                     [ 30%]
+test_poly.py .........                                                   [ 60%]
+test_problems.py .......                                                 [ 83%]
+test_utils.py .....                                                      [100%]
+
+=============================== warnings summary ===============================
+test/test_utils.py::test_vector_plotter_add_and_plot
+  /home/bodorcy/PycharmProjects/numszam_toolbox/numszam_toolbox/src/numszam_toolbox_szte/utils/plotter.py:49: UserWarning: FigureCanvasAgg is non-interactive, and thus cannot be shown
+    plt.show()
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+================================ tests coverage ================================
+_______________ coverage: platform linux, python 3.10.12-final-0 _______________
+
+Name                                                                                                                Stmts   Miss  Cover
+---------------------------------------------------------------------------------------------------------------------------------------
+/home/bodorcy/PycharmProjects/numszam_toolbox/numszam_toolbox/src/numszam_toolbox_szte/__init__.py                      0      0   100%
+/home/bodorcy/PycharmProjects/numszam_toolbox/numszam_toolbox/src/numszam_toolbox_szte/decomp/__init__.py               3      0   100%
+/home/bodorcy/PycharmProjects/numszam_toolbox/numszam_toolbox/src/numszam_toolbox_szte/decomp/cholesky.py              17      2    88%
+/home/bodorcy/PycharmProjects/numszam_toolbox/numszam_toolbox/src/numszam_toolbox_szte/decomp/lu.py                    60     11    82%
+/home/bodorcy/PycharmProjects/numszam_toolbox/numszam_toolbox/src/numszam_toolbox_szte/decomp/qr.py                    28      3    89%
+/home/bodorcy/PycharmProjects/numszam_toolbox/numszam_toolbox/src/numszam_toolbox_szte/iterative/__init__.py            2      0   100%
+/home/bodorcy/PycharmProjects/numszam_toolbox/numszam_toolbox/src/numszam_toolbox_szte/iterative/gauss_seidel.py       14      0   100%
+/home/bodorcy/PycharmProjects/numszam_toolbox/numszam_toolbox/src/numszam_toolbox_szte/iterative/power.py              31      7    77%
+/home/bodorcy/PycharmProjects/numszam_toolbox/numszam_toolbox/src/numszam_toolbox_szte/poly/__init__.py                 1      0   100%
+/home/bodorcy/PycharmProjects/numszam_toolbox/numszam_toolbox/src/numszam_toolbox_szte/poly/polynomial.py              82      4    95%
+/home/bodorcy/PycharmProjects/numszam_toolbox/numszam_toolbox/src/numszam_toolbox_szte/utils/__init__.py                2      0   100%
+/home/bodorcy/PycharmProjects/numszam_toolbox/numszam_toolbox/src/numszam_toolbox_szte/utils/matrix_utils.py           14      7    50%
+/home/bodorcy/PycharmProjects/numszam_toolbox/numszam_toolbox/src/numszam_toolbox_szte/utils/plotter.py                74      7    91%
+/home/bodorcy/PycharmProjects/numszam_toolbox/numszam_toolbox/src/numszam_toolbox_szte/web/__init__.py                  1      0   100%
+/home/bodorcy/PycharmProjects/numszam_toolbox/numszam_toolbox/src/numszam_toolbox_szte/web/app.py                      18      1    94%
+/home/bodorcy/PycharmProjects/numszam_toolbox/numszam_toolbox/src/numszam_toolbox_szte/web/problems/__init__.py         0      0   100%
+/home/bodorcy/PycharmProjects/numszam_toolbox/numszam_toolbox/src/numszam_toolbox_szte/web/problems/generators.py      61      0   100%
+---------------------------------------------------------------------------------------------------------------------------------------
+TOTAL                                                                                                                 408     42    90%
+======================== 30 passed, 1 warning in 1.79s =========================
