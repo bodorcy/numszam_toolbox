@@ -22,18 +22,15 @@ A **reports** mappában megtalálható a **pylint** és a **flake8** elemzők, i
 ## Projekt felépítése
 
 ```
-numszam_toolbox/
-├── src/
-│   ├── poly/               # Polinom reprezentációk és műveletek
-│   ├── decomp/             # Mátrixfelbontási algoritmusok
-│   ├── iterative/          # Iterációs módszerek
-│   ├── problems/           # Feladatgenerátorok
-│   ├── web/                # Flask alkalmazás
-│   └── utils.py            # Segédfüggvények
-├── tests/                  # Tesztek
-├── templates/              # HTML sablonok (Flask)
-├── static/                 # Statikus fájlok (grafikon, CSS)
-└── requirements.txt        # Függőségek listája
+└── numszam_toolbox
+    ├── decomp        # mátrix felbontások
+    ├── iterative     # iterációs módszerek
+    ├── poly          # polinom osztály
+    ├── utils         # mátrix generálás, pretty printing
+    └── web           # Flask webapp
+        ├── problems  # feladat generálás
+        ├── static    # .png, .css
+        └── templates # .html
 
 ```
 
