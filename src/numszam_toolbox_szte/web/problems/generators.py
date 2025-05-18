@@ -1,9 +1,9 @@
+import numpy as np
 from numszam_toolbox_szte.decomp import lu, qr, chol
 from numszam_toolbox_szte.iterative import power_method, gauss_seidel
 from numszam_toolbox_szte.utils import pretty_print_matrix, get_random_regular_matrix, get_random_positive_def_matrix
 from numszam_toolbox_szte.utils.plotter import PolynomialPlotter
 from numszam_toolbox_szte.poly import LagrangePolynomial, generate_base_points
-import numpy as np
 
 
 def generate_lu():
@@ -54,7 +54,7 @@ def generate_power():
     A = get_random_regular_matrix(n)
     v0 = np.random.randint(-3, 3, size=(n, 1))
 
-    eigenvalue, eigenvector, out = power_method(
+    eigenvalue, _, out = power_method(
         A, v0=v0, max_iterations=iterations, verbose=True)
 
     return (

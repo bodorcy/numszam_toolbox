@@ -65,7 +65,7 @@ class EliminaciosMatrix:
         Az invertált elminációs mátrix.
         """
         self._matrix = (self._matrix @ (-1 * np.eye(self._matrix.shape[1]))
-                       + (2 * np.eye(self._matrix.shape[1])))
+                        + (2 * np.eye(self._matrix.shape[1])))
 
         # A eliminációs mátrixot megszorozzuk -1 * I-al,
         # majd a főátlóhoz 2-t adunk, hogy a végén 1-esek maradjanok ott.
