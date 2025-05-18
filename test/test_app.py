@@ -1,7 +1,7 @@
 import os
 import shutil
 import pytest
-from src.numszam_toolbox_szte.web.app import app
+from src.numszam_toolbox.web.app import app
 
 
 @pytest.fixture

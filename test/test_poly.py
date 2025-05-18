@@ -1,6 +1,6 @@
 import numpy as np
 import pytest
-from src.numszam_toolbox_szte.poly import Polynomial, LagrangePolynomial, generate_base_points
+from src.numszam_toolbox.poly import Polynomial, LagrangePolynomial, generate_base_points
 
 
 def test_polynomial_init_and_str():

@@ -1,7 +1,7 @@
 import os
 import shutil
 
-from src.numszam_toolbox_szte.web import generate_problem
+from src.numszam_toolbox.web import generate_problem
 
 
 def test_generate_lu():
