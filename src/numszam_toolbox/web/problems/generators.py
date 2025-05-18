@@ -1,9 +1,9 @@
 import numpy as np
-from numszam_toolbox_szte.decomp import lu, qr, chol
-from numszam_toolbox_szte.iterative import power_method, gauss_seidel
-from numszam_toolbox_szte.utils import pretty_print_matrix, get_random_regular_matrix, get_random_positive_def_matrix
-from numszam_toolbox_szte.utils.plotter import PolynomialPlotter
-from numszam_toolbox_szte.poly import LagrangePolynomial, generate_base_points
+from src.numszam_toolbox.decomp import lu, qr, chol
+from src.numszam_toolbox.iterative import power_method, gauss_seidel
+from src.numszam_toolbox.utils import pretty_print_matrix, get_random_regular_matrix, get_random_positive_def_matrix
+from src.numszam_toolbox.utils.plotter import PolynomialPlotter
+from src.numszam_toolbox.poly import LagrangePolynomial, generate_base_points
 
 
 def generate_lu():

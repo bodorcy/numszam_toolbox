@@ -1,41 +1,43 @@
-./src/numszam_toolbox_szte/decomp/__init__.py:1:1: F401 '.lu.lu' imported but unused
-./src/numszam_toolbox_szte/decomp/__init__.py:2:1: F401 '.qr.qr' imported but unused
-./src/numszam_toolbox_szte/decomp/__init__.py:3:1: F401 '.cholesky.chol' imported but unused
-./src/numszam_toolbox_szte/decomp/lu.py:16:39: E252 missing whitespace around parameter equals
-./src/numszam_toolbox_szte/decomp/lu.py:16:40: E252 missing whitespace around parameter equals
-./src/numszam_toolbox_szte/decomp/lu.py:87:80: E501 line too long (82 > 79 characters)
-./src/numszam_toolbox_szte/decomp/lu.py:89:80: E501 line too long (82 > 79 characters)
-./src/numszam_toolbox_szte/decomp/lu.py:125:9: E741 ambiguous variable name 'l'
-./src/numszam_toolbox_szte/decomp/lu.py:129:80: E501 line too long (83 > 79 characters)
-./src/numszam_toolbox_szte/decomp/qr.py:29:80: E501 line too long (97 > 79 characters)
-./src/numszam_toolbox_szte/iterative/__init__.py:1:1: F401 '.gauss_seidel.gauss_seidel' imported but unused
-./src/numszam_toolbox_szte/iterative/__init__.py:2:1: F401 '.power.power_method' imported but unused
-./src/numszam_toolbox_szte/iterative/power.py:10:80: E501 line too long (85 > 79 characters)
-./src/numszam_toolbox_szte/iterative/power.py:36:80: E501 line too long (85 > 79 characters)
-./src/numszam_toolbox_szte/iterative/power.py:49:80: E501 line too long (82 > 79 characters)
-./src/numszam_toolbox_szte/poly/__init__.py:1:1: F401 '.polynomial.Polynomial' imported but unused
-./src/numszam_toolbox_szte/poly/__init__.py:1:1: F401 '.polynomial.LagrangePolynomial' imported but unused
-./src/numszam_toolbox_szte/poly/__init__.py:1:1: F401 '.polynomial.generate_base_points' imported but unused
-./src/numszam_toolbox_szte/poly/polynomial.py:13:80: E501 line too long (101 > 79 characters)
-./src/numszam_toolbox_szte/poly/polynomial.py:35:80: E501 line too long (80 > 79 characters)
-./src/numszam_toolbox_szte/poly/polynomial.py:74:80: E501 line too long (80 > 79 characters)
-./src/numszam_toolbox_szte/poly/polynomial.py:115:80: E501 line too long (94 > 79 characters)
-./src/numszam_toolbox_szte/poly/polynomial.py:133:80: E501 line too long (81 > 79 characters)
-./src/numszam_toolbox_szte/poly/polynomial.py:142:30: E127 continuation line over-indented for visual indent
-./src/numszam_toolbox_szte/utils/__init__.py:1:1: F401 '.matrix_utils.pretty_print_matrix' imported but unused
-./src/numszam_toolbox_szte/utils/__init__.py:1:1: F401 '.matrix_utils.get_random_regular_matrix' imported but unused
-./src/numszam_toolbox_szte/utils/__init__.py:1:1: F401 '.matrix_utils.get_random_positive_def_matrix' imported but unused
-./src/numszam_toolbox_szte/utils/__init__.py:2:80: E501 line too long (83 > 79 characters)
-./src/numszam_toolbox_szte/utils/__init__.py:3:1: F401 '.plotter.Plotter' imported but unused
-./src/numszam_toolbox_szte/utils/__init__.py:3:1: F401 '.plotter.VectorPlotter' imported but unused
-./src/numszam_toolbox_szte/utils/__init__.py:3:1: F401 '.plotter.PolynomialPlotter' imported but unused
-./src/numszam_toolbox_szte/web/__init__.py:1:1: F403 'from .problems.generators import *' used; unable to detect undefined names
-./src/numszam_toolbox_szte/web/__init__.py:1:1: F401 '.problems.generators.*' imported but unused
-./src/numszam_toolbox_szte/web/problems/generators.py:4:80: E501 line too long (117 > 79 characters)
-./src/numszam_toolbox_szte/web/problems/generators.py:66:80: E501 line too long (84 > 79 characters)
+./setup.py:6:80: E501 line too long (92 > 79 characters)
+./src/numszam_toolbox/decomp/__init__.py:1:1: F401 '.lu.lu' imported but unused
+./src/numszam_toolbox/decomp/__init__.py:2:1: F401 '.qr.qr' imported but unused
+./src/numszam_toolbox/decomp/__init__.py:3:1: F401 '.cholesky.chol' imported but unused
+./src/numszam_toolbox/decomp/lu.py:16:39: E252 missing whitespace around parameter equals
+./src/numszam_toolbox/decomp/lu.py:16:40: E252 missing whitespace around parameter equals
+./src/numszam_toolbox/decomp/lu.py:87:80: E501 line too long (82 > 79 characters)
+./src/numszam_toolbox/decomp/lu.py:89:80: E501 line too long (82 > 79 characters)
+./src/numszam_toolbox/decomp/lu.py:125:9: E741 ambiguous variable name 'l'
+./src/numszam_toolbox/decomp/lu.py:129:80: E501 line too long (83 > 79 characters)
+./src/numszam_toolbox/decomp/qr.py:29:80: E501 line too long (97 > 79 characters)
+./src/numszam_toolbox/iterative/__init__.py:1:1: F401 '.gauss_seidel.gauss_seidel' imported but unused
+./src/numszam_toolbox/iterative/__init__.py:2:1: F401 '.power.power_method' imported but unused
+./src/numszam_toolbox/iterative/power.py:10:80: E501 line too long (85 > 79 characters)
+./src/numszam_toolbox/iterative/power.py:36:80: E501 line too long (85 > 79 characters)
+./src/numszam_toolbox/iterative/power.py:49:80: E501 line too long (82 > 79 characters)
+./src/numszam_toolbox/poly/__init__.py:1:1: F401 '.polynomial.Polynomial' imported but unused
+./src/numszam_toolbox/poly/__init__.py:1:1: F401 '.polynomial.LagrangePolynomial' imported but unused
+./src/numszam_toolbox/poly/__init__.py:1:1: F401 '.polynomial.generate_base_points' imported but unused
+./src/numszam_toolbox/poly/polynomial.py:13:80: E501 line too long (101 > 79 characters)
+./src/numszam_toolbox/poly/polynomial.py:35:80: E501 line too long (80 > 79 characters)
+./src/numszam_toolbox/poly/polynomial.py:74:80: E501 line too long (80 > 79 characters)
+./src/numszam_toolbox/poly/polynomial.py:115:80: E501 line too long (94 > 79 characters)
+./src/numszam_toolbox/poly/polynomial.py:133:80: E501 line too long (81 > 79 characters)
+./src/numszam_toolbox/poly/polynomial.py:142:30: E127 continuation line over-indented for visual indent
+./src/numszam_toolbox/utils/__init__.py:1:1: F401 '.matrix_utils.pretty_print_matrix' imported but unused
+./src/numszam_toolbox/utils/__init__.py:1:1: F401 '.matrix_utils.get_random_regular_matrix' imported but unused
+./src/numszam_toolbox/utils/__init__.py:1:1: F401 '.matrix_utils.get_random_positive_def_matrix' imported but unused
+./src/numszam_toolbox/utils/__init__.py:2:80: E501 line too long (83 > 79 characters)
+./src/numszam_toolbox/utils/__init__.py:3:1: F401 '.plotter.Plotter' imported but unused
+./src/numszam_toolbox/utils/__init__.py:3:1: F401 '.plotter.VectorPlotter' imported but unused
+./src/numszam_toolbox/utils/__init__.py:3:1: F401 '.plotter.PolynomialPlotter' imported but unused
+./src/numszam_toolbox/web/__init__.py:1:1: F403 'from .problems.generators import *' used; unable to detect undefined names
+./src/numszam_toolbox/web/__init__.py:1:1: F401 '.problems.generators.*' imported but unused
+./src/numszam_toolbox/web/problems/__init__.py:1:1: F403 'from .generators import *' used; unable to detect undefined names
+./src/numszam_toolbox/web/problems/__init__.py:1:1: F401 '.generators.*' imported but unused
+./src/numszam_toolbox/web/problems/generators.py:4:80: E501 line too long (116 > 79 characters)
+./src/numszam_toolbox/web/problems/generators.py:66:80: E501 line too long (84 > 79 characters)
 ./test/test_iterative.py:42:80: E501 line too long (84 > 79 characters)
-./test/test_poly.py:3:80: E501 line too long (94 > 79 characters)
+./test/test_poly.py:3:80: E501 line too long (89 > 79 characters)
 ./test/test_poly.py:69:80: E501 line too long (86 > 79 characters)
 ./test/test_poly.py:70:80: E501 line too long (83 > 79 characters)
 ./test/test_poly.py:71:80: E501 line too long (86 > 79 characters)
-./test/test_utils.py:3:80: E501 line too long (84 > 79 characters)
