@@ -1,5 +1,5 @@
 import pytest
-from web.app import app
+from src.numszam_toolbox_szte.web.app import app
 
 
 @pytest.fixture

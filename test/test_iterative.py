@@ -1,6 +1,6 @@
 import numpy as np
-from iterative import gauss_seidel
-from iterative import power_method
+from src.numszam_toolbox_szte.iterative import gauss_seidel
+from src.numszam_toolbox_szte.iterative import power_method
 
 
 def test_gauss_seidel_convergence():

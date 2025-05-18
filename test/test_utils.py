@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib
-from utils import Plotter, VectorPlotter, PolynomialPlotter
-from poly import Polynomial
+from src.numszam_toolbox_szte.utils import Plotter, VectorPlotter, PolynomialPlotter
+from src.numszam_toolbox_szte.poly import Polynomial
 
 matplotlib.use('Agg')  # GUI nélküli display a teszteléshez
 

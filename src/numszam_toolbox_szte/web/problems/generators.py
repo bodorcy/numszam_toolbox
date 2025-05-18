@@ -1,8 +1,8 @@
-from decomp import lu, qr, chol
-from iterative import power_method, gauss_seidel
-from utils import pretty_print_matrix, get_random_regular_matrix, get_random_positive_def_matrix
-from utils.plotter import PolynomialPlotter
-from poly import LagrangePolynomial, generate_base_points
+from src.numszam_toolbox_szte.decomp import lu, qr, chol
+from src.numszam_toolbox_szte.iterative import power_method, gauss_seidel
+from src.numszam_toolbox_szte.utils import pretty_print_matrix, get_random_regular_matrix, get_random_positive_def_matrix
+from src.numszam_toolbox_szte.utils.plotter import PolynomialPlotter
+from src.numszam_toolbox_szte.poly import LagrangePolynomial, generate_base_points
 import numpy as np
 
 

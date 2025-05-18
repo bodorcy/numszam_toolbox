@@ -1,5 +1,5 @@
 import numpy as np
-from decomp import lu, qr, chol
+from src.numszam_toolbox_szte.decomp import lu, qr, chol
 
 
 def test_lu_decomposition():

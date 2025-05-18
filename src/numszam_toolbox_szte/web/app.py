@@ -1,5 +1,5 @@
 from flask import Flask, render_template, jsonify, request
-from web import generate_problem
+from src.numszam_toolbox_szte.web import generate_problem
 
 app = Flask(__name__)
 
