@@ -24,13 +24,11 @@ numszam_toolbox/
 │   ├── problems/           # Feladatgenerátorok
 │   ├── web/                # Flask alkalmazás
 │   └── utils.py            # Segédfüggvények
-├── tests/                  # Egységtesztek
+├── tests/                  # Tesztek
 ├── templates/              # HTML sablonok (Flask)
 ├── static/                 # Statikus fájlok (grafikon, CSS)
-├── requirements.txt        # Függőségek listája
-├── pyproject.toml          # Csomagolási metaadatok
-├── README.md               # Ez a fájl
-└── LICENSE                 # Licenc (MIT)
+└── requirements.txt        # Függőségek listája
+
 ```
 
 ## Telepítés
