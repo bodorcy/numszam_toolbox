@@ -1,7 +1,13 @@
 
+
+
 # Numszám Toolbox
 
 A **numszam_toolbox** egy Python-alapú numerikus függvénykönyvtár, amely feladatokat generál és old meg különböző mátrixműveletekkel és numerikus algoritmusokkal. Használható oktatási célokra és gyakorláshoz, grafikus webes felülettel kiegészítve.
+
+
+## Reports
+A **reports** mappában megtalálható a **pylint** és a **flake8** elemzők, illetve a **pytest** eredménye is.
 
 ## Funkciók
 
