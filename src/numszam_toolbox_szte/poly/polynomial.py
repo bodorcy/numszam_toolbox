@@ -71,12 +71,12 @@ class Polynomial:
         Polinom kiértékelése az x0 helyen, Horner-módszerrel.
         :param x0: polinom együtthatói
         """
-        prod = self.coeffs[0]
+        result = np.full_like(x0, self.coeffs[0], dtype=np.float64)  # tömb eval
 
-        for i in range(1, len(self)):
-            prod = x0 * prod + self.coeffs[i]
+        for coeff in self.coeffs[1:]:
+            result = result * x0 + coeff
 
-        return prod
+        return result
 
 
 class LagrangePolynomial(Polynomial):
