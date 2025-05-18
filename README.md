@@ -67,7 +67,7 @@ Ezután megnyitható a böngészőben:
 [http://127.0.0.1:5000](http://127.0.0.1:5000)
 
 
-## Licenc
+## Licensz
 
 Ez a projekt az MIT licenc alatt érhető el. Szabadon másolható, módosítható és terjeszthető.
 
