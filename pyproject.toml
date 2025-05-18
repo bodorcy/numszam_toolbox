@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "numszam_toolbox"
 version = "0.1.0"
-description = "Egy fuggvenykonyvtar, es egyszeru webapp a Numerikus Számítások tárgyhoz."
+description = "Egy fuggvenykonyvtar, es egyszeru webapp a Numerikus Szamitasok targyhoz."
 readme = "README.md"
 authors = [
     { name="Vincze Nándor", email="nvincze@inf.u-szeged.hu" }
