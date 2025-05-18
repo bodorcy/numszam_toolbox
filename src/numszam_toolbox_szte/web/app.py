@@ -15,7 +15,6 @@ def get_problem():
     topic = data.get("topic")
     result = generate_problem(topic)
 
-    # Support plot for Lagrange polynomials
     if topic == "lagrange":
         problem, solution, plot_path = result
         return jsonify({

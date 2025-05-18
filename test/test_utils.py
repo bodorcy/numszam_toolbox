@@ -45,7 +45,7 @@ def test_vector_plotter_single_plot():
 
 def test_polynomial_plotter_add_and_plot():
     pp = PolynomialPlotter("Poly Test")
-    dummy_poly = Polynomial()
+    dummy_poly = Polynomial([1])
 
     pp.add(dummy_poly)
     assert len(pp.data) == 1

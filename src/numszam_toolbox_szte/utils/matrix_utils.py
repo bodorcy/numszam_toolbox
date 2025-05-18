@@ -22,7 +22,7 @@ def get_random_positive_def_matrix(n, min_val=-5, max_val=5):
 
 def pretty_print_matrix(matrix, decimals=2):
     """
-    Convert a NumPy matrix into a nicely formatted string.
+    Matrix formázás printinghez.
     """
     rounded = np.round(matrix, decimals=decimals)
     rows = ["[" + "  ".join(f"{val:>6.2f}" for val in row) + "]"

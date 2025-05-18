@@ -6,6 +6,7 @@ import numpy as np
 from numszam_toolbox_szte.utils import pretty_print_matrix
 from numszam_toolbox_szte.utils.plotter import VectorPlotter
 
+
 def power_method(A, v0=None, max_iterations=50, tol=1e-5, verbose=False, draw=False):
     """
     Hatványmódszer a legnagyobb magnitudójú sajátérték kiszámításához.
