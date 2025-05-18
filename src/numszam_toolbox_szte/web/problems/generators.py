@@ -1,8 +1,8 @@
-from src.numszam_toolbox_szte.decomp import lu, qr, chol
-from src.numszam_toolbox_szte.iterative import power_method, gauss_seidel
-from src.numszam_toolbox_szte.utils import pretty_print_matrix, get_random_regular_matrix, get_random_positive_def_matrix
-from src.numszam_toolbox_szte.utils.plotter import PolynomialPlotter
-from src.numszam_toolbox_szte.poly import LagrangePolynomial, generate_base_points
+from numszam_toolbox_szte.decomp import lu, qr, chol
+from numszam_toolbox_szte.iterative import power_method, gauss_seidel
+from numszam_toolbox_szte.utils import pretty_print_matrix, get_random_regular_matrix, get_random_positive_def_matrix
+from numszam_toolbox_szte.utils.plotter import PolynomialPlotter
+from numszam_toolbox_szte.poly import LagrangePolynomial, generate_base_points
 import numpy as np
 
 
@@ -17,7 +17,7 @@ def generate_lu():
 
     return (
         f"Végezdd el az LU felbontást a következő mátrixon:\n"
-        f"{pretty_print_matrix(A)}\n.",
+        f"{pretty_print_matrix(A)}\n",
         f"L =\n{pretty_print_matrix(L)}\n\nU =\n{pretty_print_matrix(U)}"
         f"\n\n{output_str}"
 
@@ -31,7 +31,7 @@ def generate_qr():
 
     return (
         f"Végezdd el a QR felbontást a következő mátrixon:\n"
-        f"{pretty_print_matrix(A)}\n.",
+        f"{pretty_print_matrix(A)}\n",
         f"Q =\n{pretty_print_matrix(Q)}\nR =\n{pretty_print_matrix(R)}"
         f"\n\n{output}"
     )
@@ -55,7 +55,7 @@ def generate_power():
     v0 = np.random.randint(-3, 3, size=(n, 1))
 
     eigenvalue, eigenvector, out = power_method(
-        A, v0=v0, max_iterations=iterations+1, verbose=True)
+        A, v0=v0, max_iterations=iterations, verbose=True)
 
     return (
         f"Hajts végre az alábbi kezdővektoron (x0)"
@@ -63,7 +63,7 @@ def generate_power():
         f"Mi a spektrálsugár közelítése ennyi itaráció után?\n"
         f"x0 =\n{pretty_print_matrix(v0, 0)}\n"
         f"A =\n{pretty_print_matrix(A)}\n",
-        f"Spektrálsugár közelítés: {np.round(eigenvalue, 2)}\nIterációk: {out}"
+        f"Spektrálsugár közelítés: {np.round(eigenvalue, 2)[0]}\n\nIterációk: {out}"
     )
 
 
@@ -73,7 +73,7 @@ def generate_lagrange():
 
     bps = generate_base_points(n)
     pn = LagrangePolynomial(bps)
-    pplotter = PolynomialPlotter()
+    pplotter = PolynomialPlotter("Lagrange polinom")
     pplotter.add(pn)
 
     x1 = min([p[0] for p in bps])
