@@ -1,4 +1,6 @@
 import os
+import shutil
+
 from src.numszam_toolbox_szte.web import generate_problem
 
 
@@ -31,12 +33,19 @@ def test_generate_power():
 
 
 def test_generate_lagrange():
-    problem, solution, plot_path = generate_problem("lagrange")
-    assert isinstance(problem, str)
-    assert isinstance(solution, str)
-    assert isinstance(plot_path, str)
-    assert plot_path.endswith(".jpg")
-    assert os.path.exists(plot_path)
+    os.makedirs("static", exist_ok=True)
+
+    try:
+        problem, solution, plot_path = generate_problem("lagrange")
+
+        assert isinstance(problem, str)
+        assert isinstance(solution, str)
+        assert isinstance(plot_path, str)
+        assert plot_path.endswith(".jpg")
+        assert os.path.exists(plot_path)
+    finally:
+        if os.path.exists("static"):
+            shutil.rmtree("static")
 
 
 def test_generate_gauss_seidel():

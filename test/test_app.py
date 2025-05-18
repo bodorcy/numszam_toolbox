@@ -1,3 +1,5 @@
+import os
+import shutil
 import pytest
 from src.numszam_toolbox_szte.web.app import app
 
@@ -24,12 +26,18 @@ def test_get_problem_valid_topic(client):
 
 
 def test_get_problem_lagrange(client):
-    response = client.post("/get_problem", json={"topic": "lagrange"})
-    assert response.status_code == 200
-    data = response.get_json()
-    assert "problem" in data
-    assert "solution" in data
-    assert "plot" in data
+    os.makedirs("static", exist_ok=True)
+
+    try:
+        response = client.post("/get_problem", json={"topic": "lagrange"})
+        assert response.status_code == 200
+        data = response.get_json()
+        assert "problem" in data
+        assert "solution" in data
+        assert "plot" in data
+    finally:
+        if os.path.exists("static"):
+            shutil.rmtree("static")
 
 
 def test_get_problem_invalid_topic(client):
